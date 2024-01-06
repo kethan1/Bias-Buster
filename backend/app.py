@@ -1,6 +1,8 @@
 import os
+import json
 
-from flask import Flask, render_template, request
+from bson import json_util
+from flask import Flask, request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -16,7 +18,7 @@ CORS(app)
 
 @app.route("/api/v1/get-comments")
 def get_comments():
-    url = request.args.get("url")
+    url = request.args["url"]
     print(url)
     print(list(db.comments.find({
         "url": url
@@ -26,36 +28,36 @@ def get_comments():
     }))
 
 
-@app.route("/api/v1/get-rating")
-def get_rating():
-    url = request.args.get("url")
-    return list(db.comments.aggregate([
-        {
-            "$match": {
-                "url": url
-            }
-        },
-        {
-            "$group": {
-                "_id": "$url",
-                "avgRating": {
-                    "$avg": "$rating"
-                }
-            }
-        }
-    ]))
-
-
 @app.route("/api/v1/post-comment", methods=["POST"])
 def post_comment():
     url = request.json["url"]
     comment = request.json["comment"]
-    rating = request.json["rating"]
     db.comments.insert_one({
         "url": url,
         "comment": comment,
+    })
+
+
+@app.route("/api/v1/get-ratings")
+def get_ratings():
+    url = request.args["url"]
+
+    return json.loads(json_util.dumps(db.ratings.find({
+        "url": url
+    })))
+
+
+@app.route("/api/v1/add-rating", methods=["POST"])
+def add_rating():
+    url = request.json["url"]
+    rating = int(request.json["rating"])
+
+    db.ratings.insert_one({
+        "url": url,
         "rating": rating
     })
+
+    return {"success": True}
 
 
 if __name__ == "__main__":
