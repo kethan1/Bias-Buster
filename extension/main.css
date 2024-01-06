@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "DinRoundPro";
+    src: url(./DINRoundPro.ttf);
+}
+
+body {
+    font-family: "DinRoundPro";
+}
+
+
+.submit {
+  box-shadow: 0 2px 0 #188CC5;
+}
+.submit:active {
+  box-shadow: none;
+  transform: translateY(2px);
+}

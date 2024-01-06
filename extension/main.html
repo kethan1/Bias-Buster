@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet/less" type="text/css" href="main.less" />
-    <link rel="stylesheet/less" type="text/css" href="tailwind-output.css" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src *">
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="tailwind-build.css" />
+    <meta http-equiv="Content-Security-Policy" content="font-src *; default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *">
 </head>
-<body>
-    <p id="url">Test</p>
-    <div id="rating">
-        <h2>Rate Me!</h2>
-        <div id="star-five"></div>
-        <span onclick=rating(this) id="1" class="star">⭐</span>
-        Mean: <span id="biasmean">0</span>/5
-        Median: <span id="biasmedian">0</span>/5
-        Mode: <span id="biasmode">0</span>/5
-    </div>
+<body class="text-center">
+    <div class="w-80 flex flex-col items-center">
+        <h1 class="pt-2 text-2xl">Truth Finder</h1>
+        <div id="rating">
+            <p>Mean: <span id="biasmean">0</span>/5</p>
+            <p>Median: <span id="biasmedian">0</span>/5</p>
+            <p>Mode: <span id="biasmode">0</span>/5</p>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/less" ></script>
+        <h2 class="font-bold">How biased is this website?</h2>
+        <div class="flex items-center">
+            <svg id="1" class="w-4 h-4 ms-1" style="color: grey;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg id="2" class="w-4 h-4 ms-1" style="color: grey;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg id="3" class="w-4 h-4 ms-1" style="color: grey;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg id="4" class="w-4 h-4 ms-1" style="color: grey;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg id="5" class="w-4 h-4 ms-1" style="color: grey;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+        </div>
+        <button id="submitRating" type="button" class="submit text-white bg-[#1CAFF6] font-medium rounded-lg text-sm px-2 py-1.5 me-2 my-4">Submit Rating!</button>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
