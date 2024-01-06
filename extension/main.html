@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="main.css">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+    <link rel="stylesheet/less" type="text/css" href="main.less" />
+    <link rel="stylesheet/less" type="text/css" href="tailwind-output.css" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src *">
 </head>
 <body>
     <p id="url">Test</p>
+    <div id="rating">
+        <h2>Rate Me!</h2>
+        <div id="star-five"></div>
+        <span onclick=rating(this) id="1" class="star">⭐</span>
+        Mean: <span id="biasmean">0</span>/5
+        Median: <span id="biasmedian">0</span>/5
+        Mode: <span id="biasmode">0</span>/5
+    </div>
 
-    <script src="main.js" unsafe-inline></script>
+    <script src="https://cdn.jsdelivr.net/npm/less" ></script>
+    <script src="main.js"></script>
 </body>
 </html>
