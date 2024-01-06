@@ -10,22 +10,26 @@ load_dotenv()
 app = Flask(__name__)
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 mongo = PyMongo(app)
-db = mongo.dev
+db = mongo.cx["dev"]
 CORS(app)
 
 
 @app.route("/api/v1/get-comments")
 def get_comments():
     url = request.args.get("url")
-    return db.comments.find({
+    print(url)
+    print(list(db.comments.find({
         "url": url
-    })
+    })))
+    return list(db.comments.find({
+        "url": url
+    }))
 
 
 @app.route("/api/v1/get-rating")
 def get_rating():
     url = request.args.get("url")
-    return db.comments.aggregate([
+    return list(db.comments.aggregate([
         {
             "$match": {
                 "url": url
@@ -39,10 +43,10 @@ def get_rating():
                 }
             }
         }
-    ])
+    ]))
 
 
-@app.route("/api/v1/get-comments", methods=["POST"])
+@app.route("/api/v1/post-comment", methods=["POST"])
 def post_comment():
     url = request.json["url"]
     comment = request.json["comment"]
