@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime, timezone
 
 from bson import json_util
 from flask import Flask, request
@@ -32,9 +33,12 @@ def get_comments():
 def post_comment():
     url = request.json["url"]
     comment = request.json["comment"]
+    username = request.json["username"]
     db.comments.insert_one({
         "url": url,
         "comment": comment,
+        "username": username,
+        "timestamp": datetime.now(timezone.utc)
     })
 
 

@@ -1,5 +1,5 @@
 const SERVER_URL = "http://localhost:5000";
-let url = "https://stackoverflow.com/questions/44192731/fetch-post-is-returning-http-415-while-curl-goes-on-fine-and-returns-result";
+let url = "https://stackoerflow.com/questions/44192731/fetch-post-is-returning-http-415-while-curl-goes-on-fine-and-returns-result";
 
 // chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
 //   url = tabs[0].url;
@@ -17,10 +17,20 @@ let url = "https://stackoverflow.com/questions/44192731/fetch-post-is-returning-
     const [commentsResponse, ratingsResponse] = responses;
     Promise.all([commentsResponse.json(), ratingsResponse.json()]).then(
       ([comments, ratings]) => {
-        alert(ratings);
-        console.log(ratings);
-        let ratingNumbers = ratings.forEach(element => element.rating);
-        alert(`Mean: ${mean(rating)}\nMedian: ${median(rating)}\nMode: ${mode(rating)}`);
+        let ratingNumbers = ratings.map(element => element.rating);
+
+        if (ratingNumbers.length === 0) {
+          document.getElementById("statisticsLoading").classList.add("hidden");
+          document.getElementById("statisticsNone").classList.remove("hidden");
+          return;
+        }
+
+        document.getElementById("biasmean").innerHTML = mean(ratingNumbers);
+        document.getElementById("biasmedian").innerHTML = median(ratingNumbers);
+        document.getElementById("biasmode").innerHTML = mode(ratingNumbers);
+
+        document.getElementById("statisticsLoading").classList.add("hidden");
+        document.getElementById("statistics").classList.remove("hidden");
       }
     );
   });
@@ -75,18 +85,18 @@ function mode(values) {
 
 function rating(starClicked) {
   if (starClicked === 1) {
-    setStarColors(["red", "grey", "grey", "grey", "grey"]);
+    setStarColors(["red", "gray", "gray", "gray", "gray"]);
   } else if (starClicked === 2) {
-    setStarColors(["orange", "orange", "grey", "grey", "grey"]);
+    setStarColors(["orange", "orange", "gray", "gray", "gray"]);
   } else if (starClicked === 3) {
-    setStarColors(["yellow", "yellow", "yellow", "grey", "grey"]);
+    setStarColors(["yellow", "yellow", "yellow", "gray", "gray"]);
   } else if (starClicked === 4) {
     setStarColors([
       "yellowgreen",
       "yellowgreen",
       "yellowgreen",
       "yellowgreen",
-      "grey",
+      "gray",
     ]);
   } else {
     setStarColors(["green", "green", "green", "green", "green"]);
@@ -127,7 +137,7 @@ function submitRating() {
 function getStarRating() {
   let rating = 0;
   for (let i = 1; i <= 5; i++) {
-    if (document.getElementById(i).style.color !== "grey") {
+    if (document.getElementById(i).style.color !== "gray") {
       rating++;
     }
   }
