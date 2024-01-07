@@ -1,5 +1,5 @@
 const SERVER_URL = "http://localhost:5000";
-let url = "https://stackoerflow.com/questions/44192731/fetch-post-is-returning-http-415-while-curl-goes-on-fine-and-returns-result";
+let url = "https://stackoverflow.com/questions/44192731/fetch-post-is-returning-http-415-while-curl-goes-on-fine-and-returns-result";
 
 // chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
 //   url = tabs[0].url;
@@ -35,6 +35,10 @@ let url = "https://stackoerflow.com/questions/44192731/fetch-post-is-returning-h
     );
   });
 // });
+
+function createComment(commentText, user, time) {
+  document.getElementById("comments").appendChild();
+}
 
 function median(values) {
   if (values.length === 0) return -1;
