@@ -3,7 +3,7 @@
   <head>
     <link rel="stylesheet" type="text/css" href="main.css" />
     <link rel="stylesheet" type="text/css" href="tailwind-build.css" />
-    <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="main.js"></script>
     <meta
       http-equiv="Content-Security-Policy"
       content="font-src *; default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *"
@@ -121,67 +121,89 @@
         </div>
 
         <button
-          id="submitRating"
           type="button"
-          class="submit text-white bg-[#1CAFF6] font-medium rounded-lg text-sm px-2 py-1.5 mt-2 active:shadow-none"
+          id="submitRatingButton"
+          class="submit text-white bg-[#1CAFF6] font-medium rounded-lg text-sm px-2 py-2 mt-3 active:shadow-none"
         >
-          Submit Rating!
+          Submit Your Rating!
         </button>
       </div>
       <hr class="w-48 h-1 mx-auto my-5 bg-gray-200 border-0 rounded" />
-      <h3 class="text-lg mb-2">Post a Comment</h3>
-      <form class="w-5/6 mx-8">
-        <div class="mb-4 border border-gray-200 rounded-lg bg-gray-50">
-          <div>
-            <label for="username" class="sr-only">Your username</label>
-            <input
-              type="text"
-              id="username"
-              class="bg-white border-b border-gray-200 text-gray-900 text-sm rounded-t-lg block w-full p-2.5"
-              placeholder="Username"
-              required
-            />
-          </div>
-          <div class="bg-white">
-            <label for="comment" class="sr-only">Your comment</label>
-            <textarea
-              id="comment"
-              rows="4"
-              class="w-full p-2.5 text-sm text-gray-900 bg-white border-0 focus:ring-0"
-              placeholder="Write a comment..."
-              required
-            ></textarea>
-          </div>
-          <div class="flex items-center justify-between px-3 py-2 border-t">
-            <button
-              type="submit"
-              class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-800"
-            >
-              Post comment
-            </button>
-          </div>
+      <form
+        id="postCommentForm"
+        action="javascript:void(0);"
+        class="w-5/6 mx-8 mb-4 border border-gray-200 rounded-lg bg-gray-50"
+      >
+        <div>
+          <label for="username" class="sr-only">Your username</label>
+          <input
+            type="text"
+            id="username"
+            class="bg-white border-b border-gray-200 text-gray-900 text-sm rounded-t-lg block w-full p-2.5 focus:ring-0 focus:border-gray-200"
+            placeholder="Username"
+            required
+          />
+        </div>
+        <div class="bg-white">
+          <label for="comment" class="sr-only">Your comment</label>
+          <textarea
+            id="comment"
+            rows="4"
+            class="w-full p-2.5 text-sm text-gray-900 border-0 bg-white focus:ring-0 focus:border-gray-200"
+            placeholder="Write a comment..."
+            required
+          ></textarea>
+        </div>
+        <div class="flex items-center justify-between px-3 py-2 border-t">
+          <button
+            type="submit"
+            class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-800"
+          >
+            Post comment
+          </button>
         </div>
       </form>
-      <p class="ms-auto text-xs text-gray-500 pb-3">
+      <p class="w-5/6 mx-8 text-xs text-gray-500 pb-3">
         Remember, contributions to this topic should follow our
         <a href="#" class="text-blue-600 hover:underline"
           >Community Guidelines</a
         >.
       </p>
-      <div id="comments" class="pb-4">
-        <h2 class="text-xl">Comments</h2>
+      <div id="commentsLoading" role="status">
+        <h2
+          class="inline-block text-xl font-medium text-center text-black rounded-full"
+        >
+          Loading...
+        </h2>
+        <span class="inline-block me-1">
+          <svg
+            aria-hidden="true"
+            class="w-4 h-4 text-gray-600 animate-spin fill-black"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+        </span>
+
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div id="comments" class="hidden" class="pb-4">
+        <h2 class="text-xl pb-3">Comments</h2>
         <div class="comment">
-          <p class="time">06/01/24</p>
-          <p class="name">Kethan V</p>
-          <p class="text">I love this website!!</p>
-        </div>
-        <div class="comment">
-          <p class="time">01/03/24</p>
-          <p class="name">Varun G</p>
-          <p class="text">I hate this website!!</p>
+          <p class="text-neutral-700 text-left text-[0.8rem]">Kethan V</p>
+          <p class="text-neutral-600 text-left text-[0.65rem]">Posted on 06/01/24</p>
+          <p class="text-black text-left text-[1rem] w-full">I love this website!!</p>
         </div>
       </div>
     </div>
-    <script src="main.js"></script>
   </body>
 </html>

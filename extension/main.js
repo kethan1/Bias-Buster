@@ -1,43 +1,106 @@
+import moment from "moment";
+import { initFlowbite } from "flowbite";
+
 const SERVER_URL = "http://localhost:5000";
-let url = "https://stackoverflow.com/questions/44192731/fetch-post-is-returning-http-415-while-curl-goes-on-fine-and-returns-result";
+let url =
+  "https://stackoverflow.com/questions/44192731/fetch-post-is-returning-http-415-while-curl-goes-on-fine-and-returns-result";
+
+
+const GET_SEARCH_PARAMS =
+  "?" +
+  new URLSearchParams({
+    url: url,
+  });
 
 // chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
 //   url = tabs[0].url;
+Promise.all([
+  fetch(`${SERVER_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS),
+  fetch(`${SERVER_URL}/api/v1/get-ratings` + GET_SEARCH_PARAMS),
+]).then((responses) => {
+  const [commentsResponse, ratingsResponse] = responses;
+  Promise.all([commentsResponse.json(), ratingsResponse.json()]).then(
+    ([comments, ratings]) => {
+      let ratingNumbers = ratings.map((element) => element.rating);
 
-  const GET_SEARCH_PARAMS =
-    "?" +
-    new URLSearchParams({
-      url: url,
-    });
-
-  Promise.all([
-    fetch(`${SERVER_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS),
-    fetch(`${SERVER_URL}/api/v1/get-ratings` + GET_SEARCH_PARAMS),
-  ]).then((responses) => {
-    const [commentsResponse, ratingsResponse] = responses;
-    Promise.all([commentsResponse.json(), ratingsResponse.json()]).then(
-      ([comments, ratings]) => {
-        let ratingNumbers = ratings.map(element => element.rating);
-
-        if (ratingNumbers.length === 0) {
-          document.getElementById("statisticsLoading").classList.add("hidden");
-          document.getElementById("statisticsNone").classList.remove("hidden");
-          return;
-        }
-
-        document.getElementById("biasmean").innerHTML = mean(ratingNumbers);
-        document.getElementById("biasmedian").innerHTML = median(ratingNumbers);
-        document.getElementById("biasmode").innerHTML = mode(ratingNumbers);
-
+      if (ratingNumbers.length === 0) {
         document.getElementById("statisticsLoading").classList.add("hidden");
-        document.getElementById("statistics").classList.remove("hidden");
+        document.getElementById("statisticsNone").classList.remove("hidden");
+        return;
       }
-    );
-  });
+
+      document.getElementById("biasmean").innerText = mean(ratingNumbers).toFixed(2);
+      document.getElementById("biasmedian").innerText = median(ratingNumbers).toFixed(2);
+      document.getElementById("biasmode").innerText = mode(ratingNumbers).toFixed(2);
+
+      document.getElementById("statisticsLoading").classList.add("hidden");
+      document.getElementById("statistics").classList.remove("hidden");
+
+      for (let comment of comments) {
+        createComment(comment.comment, comment.username, comment.timestamp);
+      }
+
+      document.getElementById("commentsLoading").classList.add("hidden");
+      document.getElementById("comments").classList.remove("hidden");
+    }
+  );
+});
 // });
 
-function createComment(commentText, user, time) {
-  document.getElementById("comments").appendChild();
+function createComment(comment, username, time) {
+  let commentDiv = document.createElement("div");
+  commentDiv.classList.add("comment");
+  let usernameP = document.createElement("p");
+  let timeP = document.createElement("p");
+  let commentP = document.createElement("p");
+  usernameP.classList.add("text-neutral-700", "text-left", "text-[0.8rem]");
+  timeP.classList.add("text-neutral-600", "text-left", "text-[0.65rem]");
+  commentP.classList.add("text-black", "text-left", "text-base", "w-full");
+  usernameP.innerText = username;
+  timeP.innerText = `Posted on ${moment(time["$date"]).format("LLL")}`;
+  commentP.innerText = comment;
+  commentDiv.appendChild(usernameP);
+  commentDiv.appendChild(timeP);
+  commentDiv.appendChild(commentP);
+  document.getElementById("comments").appendChild(commentDiv);
+}
+
+function refreshComments() {
+  document.getElementById("commentsLoading").classList.remove("hidden");
+  document.getElementById("comments").classList.add("hidden");
+
+  fetch(`${SERVER_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS).then(commentsResponse => {
+    commentsResponse.json().then(comments => {
+      for (let comment of comments) {
+        createComment(comment.comment, comment.username, comment.timestamp);
+      }
+
+      document.getElementById("commentsLoading").classList.add("hidden");
+      document.getElementById("comments").classList.remove("hidden");
+    });
+  })
+}
+
+function postComment(username, comment) {
+  fetch(`${SERVER_URL}/api/v1/post-comment`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify({
+      url: url,
+      username: username,
+      comment: comment,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      alert("Comment submitted");
+    } else {
+      alert("Comment failed");
+    }
+    refreshComments();
+  });
 }
 
 function median(values) {
@@ -55,36 +118,36 @@ function median(values) {
 }
 
 function mean(values) {
-    if (values.length === 0) return -1;
+  if (values.length === 0) return -1;
 
-    let sum = 0;
-    for (let i = 0; i < values.length; i++) {
-        sum += values[i];
-    }
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    sum += values[i];
+  }
 
-    return sum / values.length;
+  return sum / values.length;
 }
 
 function mode(values) {
-    if (values.length === 0) return -1;
+  if (values.length === 0) return -1;
 
-    let count = {};
-    let max = 0;
-    let mode = -1;
-    for (let i = 0; i < values.length; i++) {
-        if (count[values[i]] === undefined) {
-            count[values[i]] = 1;
-        } else {
-            count[values[i]]++;
-        }
-
-        if (count[values[i]] > max) {
-            max = count[values[i]];
-            mode = values[i];
-        }
+  let count = {};
+  let max = 0;
+  let mode = -1;
+  for (let i = 0; i < values.length; i++) {
+    if (count[values[i]] === undefined) {
+      count[values[i]] = 1;
+    } else {
+      count[values[i]]++;
     }
 
-    return mode;
+    if (count[values[i]] > max) {
+      max = count[values[i]];
+      mode = values[i];
+    }
+  }
+
+  return mode;
 }
 
 function rating(starClicked) {
@@ -153,6 +216,17 @@ addEventListener("load", () => {
     document.getElementById(i).addEventListener("click", () => rating(i));
   }
   document
-    .getElementById("submitRating")
+    .getElementById("submitRatingButton")
     .addEventListener("click", submitRating);
+  document.getElementById("postCommentForm").addEventListener("submit", () => {
+    let username = document.getElementById("username").value;
+    let comment = document.getElementById("comment").value;
+    if (username === "" || comment === "") {
+      alert("Please enter a username and comment");
+    } else {
+      postComment(username, comment);
+      document.getElementById("username").value = "";
+      document.getElementById("comment").value = "";
+    }
+  });
 });

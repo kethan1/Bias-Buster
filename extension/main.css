@@ -1,39 +1,24 @@
 @font-face {
-    font-family: "DinRoundPro";
-    src: url(./DINRoundPro.ttf);
+  font-family: "DinRoundPro";
+  src: url(./DINRoundPro.ttf);
 }
+
 body {
-    font-family: "DinRoundPro";
+  font-family: "DinRoundPro";
 }
 
 .submit {
-  box-shadow: 0 2px 0 #188CC5;
+  box-shadow: 0 2px 0 #188cc5;
 }
 
 .submit:active {
   transform: translateY(2px);
 }
 
-.comments {
-  border: lightslategrey;
+.comment {
+  border: 2px solid lightslategrey;
+  border-radius: 5px;
+  padding: 6px;
+  margin-bottom: 10px;
   background-color: #d1e3ff;
-}
-.time {
-  color: gray;
-  font-size: 0.5rem;
-  float:left;
-  /* max-width:35%; */
-}
-.name {
-  color: rgb(77, 77, 77);
-  font-size: 0.75rem;
-  padding-left: 4px;
-  float:left;
-  /* max-width:65%; */
-}
-.text {
-  color: black;
-  font-size: 1rem;
-  width: 100%;
-  float:left;
 }

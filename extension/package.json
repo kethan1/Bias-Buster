@@ -1,12 +1,25 @@
 {
+  "name": "bias-buster",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "keywords": [],
+  "author": "Kethan Vegunta <kethan@vegunta.com>, Varun G",
+  "license": "MIT",
   "scripts": {
-    "build": "tailwindcss -i ./tailwind.css -o ./tailwind-build.css",
-    "build-watch": "tailwindcss -i ./tailwind.css -o ./tailwind-build.css --watch"
+    "tailwind-build": "tailwindcss -i ./tailwind.css -o ./tailwind-build.css",
+    "tailwind-build-watch": "tailwindcss -i ./tailwind.css -o ./tailwind-build.css --watch",
+    "webpack-build-dev": "webpack-cli --mode=development",
+    "webpack-build-prod": "webpack-cli --mode=production"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.1"
+    "copy-webpack-plugin": "^11.0.0",
+    "tailwindcss": "^3.4.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "flowbite": "^2.2.1"
+    "flowbite": "^2.2.1",
+    "moment": "^2.30.1"
   }
 }

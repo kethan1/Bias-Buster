@@ -20,13 +20,10 @@ CORS(app)
 @app.route("/api/v1/get-comments")
 def get_comments():
     url = request.args["url"]
-    print(url)
-    print(list(db.comments.find({
+
+    return json.loads(json_util.dumps(db.comments.find({
         "url": url
     })))
-    return list(db.comments.find({
-        "url": url
-    }))
 
 
 @app.route("/api/v1/post-comment", methods=["POST"])
@@ -34,12 +31,15 @@ def post_comment():
     url = request.json["url"]
     comment = request.json["comment"]
     username = request.json["username"]
+
     db.comments.insert_one({
         "url": url,
         "comment": comment,
         "username": username,
         "timestamp": datetime.now(timezone.utc)
     })
+
+    return {"success": True}
 
 
 @app.route("/api/v1/get-ratings")
