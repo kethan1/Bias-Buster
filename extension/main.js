@@ -1,7 +1,8 @@
 import moment from "moment";
 import { Dismiss } from "flowbite";
 
-const SERVER_URL = "http://localhost:5000";
+let url;
+const SERVER_URL = "https://bias-buster-server.onrender.com";
 
 const GET_SEARCH_PARAMS =
   "?" +
