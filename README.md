@@ -17,3 +17,17 @@ We used HTML, CSS, Javascript, Moment.JS (to display the time comments were post
 
 Due to the nature of Chrome extensions, using a Javascript framework is significantly more complicated than using pure HTML and requires significantly more setup which we were not familiar with. Because of this, we decided forgo using a framework and chose to code our app without one instead. While we did save on needless errors and configuration by not using a framework, needing to manually manipulate the DOM increased development time and the complexity of the code.
 Additionally, Chrome extensions have stricter CSP requirements (they only support a subset of the specification), so we had to learn how to navigate around these.
+
+## Running Locally
+
+### Running the Flask Backend
+
+Setup up a MongoDB database instance either through MongoDB cloud or locally. Create a `.env` file and create a key `MONGO_URI`. Set the value of the key equal to the URL of the database you generated earlier.
+
+### Running the Extension
+
+To run the TailwindCSS CLI (needed for bundling only necessary files), run the command `npm run tailwind-build` (or `npm run tailwind-build-watch`).
+
+Then, run `npm run webpack-build-dev` (or `npm run webpack-build-prod` for production) to bundle the files.
+
+After that, enable developer mode on the extensions page in a Chromium browser and click on `Load Unpacked` and select the `dist` folder created in the last step.
