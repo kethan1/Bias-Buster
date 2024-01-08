@@ -4,7 +4,18 @@
   "description": "",
   "private": true,
   "keywords": [],
-  "author": "Kethan Vegunta <kethan@vegunta.com>, Varun G",
+  "author": {
+    "name": "Kethan Vegunta",
+    "email": "kethan@vegunta.com",
+    "url": "https://github.com/kethan1"
+  },
+  "contributors": [
+    {
+      "name": "Varun Gundamaraju",
+      "email": "varung2235@gmail.com",
+      "url": "https://github.com/Dodge100"
+    }
+  ],
   "license": "MIT",
   "scripts": {
     "tailwind-build": "tailwindcss -i ./tailwind.css -o ./tailwind-build.css",
