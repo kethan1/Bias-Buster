@@ -3,6 +3,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./main.js",
+  devtool: "cheap-module-source-map",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js",

@@ -6,7 +6,7 @@
     <script src="main.js"></script>
     <meta
       http-equiv="Content-Security-Policy"
-      content="font-src *; default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *"
+      content="font-src *; default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *; form-action 'none'"
     />
   </head>
   <body class="text-center">
@@ -131,7 +131,6 @@
       <hr class="w-48 h-1 mx-auto my-5 bg-gray-200 border-0 rounded" />
       <form
         id="postCommentForm"
-        action="javascript:void(0);"
         class="w-5/6 mx-8 mb-4 border border-gray-200 rounded-lg bg-gray-50"
       >
         <div>
@@ -169,6 +168,7 @@
           >Community Guidelines</a
         >.
       </p>
+      <h2 class="text-xl pb-3">Comments</h2>
       <div id="commentsLoading" role="status">
         <h2
           class="inline-block text-xl font-medium text-center text-black rounded-full"
@@ -196,14 +196,11 @@
 
         <span class="sr-only">Loading...</span>
       </div>
-      <div id="comments" class="hidden" class="pb-4">
-        <h2 class="text-xl pb-3">Comments</h2>
-        <div class="comment">
-          <p class="text-neutral-700 text-left text-[0.8rem]">Kethan V</p>
-          <p class="text-neutral-600 text-left text-[0.65rem]">Posted on 06/01/24</p>
-          <p class="text-black text-left text-[1rem] w-full">I love this website!!</p>
-        </div>
+      <div id="comments" class="hidden" class="pb-4"></div>
+      <div id="commentsNone" class="hidden">
+        <p class="text-l">There are no comments yet. Add yours!</p>
       </div>
+      <div id="toast-container" class="fixed top-5"></div>
     </div>
   </body>
 </html>
