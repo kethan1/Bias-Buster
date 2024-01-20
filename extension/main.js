@@ -1,14 +1,11 @@
 import moment from "moment";
 import { Dismiss } from "flowbite";
 
-let url;
-const SERVER_URL = "https://bias-buster-server.onrender.com";
 
-const GET_SEARCH_PARAMS =
-  "?" +
-  new URLSearchParams({
-    url: url,
-  });
+const SERVER_URL = "http://localhost:5000";
+
+let GET_SEARCH_PARAMS;
+let url;
 
 const TOAST_SUCCESS = (id, message) =>`
   <div id="${id}" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
@@ -67,6 +64,9 @@ const TOAST_ERROR = (id, message) =>`
 
 chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
   url = tabs[0].url;
+  GET_SEARCH_PARAMS = "?" + new URLSearchParams({
+    url: url,
+  });
   Promise.all([
     fetch(`${SERVER_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS),
     fetch(`${SERVER_URL}/api/v1/get-ratings` + GET_SEARCH_PARAMS),
