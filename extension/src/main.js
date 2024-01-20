@@ -1,11 +1,12 @@
+import "./tailwind.css";
+
 import moment from "moment";
 import { Dismiss } from "flowbite";
-
 
 let GET_SEARCH_PARAMS;
 let url;
 
-const TOAST_SUCCESS = (id, message) =>`
+const TOAST_SUCCESS = (id, message) => `
   <div id="${id}" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
     <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -23,7 +24,7 @@ const TOAST_SUCCESS = (id, message) =>`
   </div>
 `;
 
-const TOAST_WARNING = (id, message) =>`
+const TOAST_WARNING = (id, message) => `
   <div id="${id}" class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
     <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -41,7 +42,7 @@ const TOAST_WARNING = (id, message) =>`
   </div>
 `;
 
-const TOAST_ERROR = (id, message) =>`
+const TOAST_ERROR = (id, message) => `
   <div id="${id}" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
     <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -59,12 +60,13 @@ const TOAST_ERROR = (id, message) =>`
   </div>
 `;
 
-
 chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
   url = tabs[0].url;
-  GET_SEARCH_PARAMS = "?" + new URLSearchParams({
-    url: url,
-  });
+  GET_SEARCH_PARAMS =
+    "?" +
+    new URLSearchParams({
+      url: url,
+    });
   Promise.all([
     fetch(`${API_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS),
     fetch(`${API_URL}/api/v1/get-ratings` + GET_SEARCH_PARAMS),
@@ -78,9 +80,12 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
           document.getElementById("statisticsLoading").classList.add("hidden");
           document.getElementById("statisticsNone").classList.remove("hidden");
         } else {
-          document.getElementById("biasmean").innerText = mean(ratingNumbers).toFixed(2);
-          document.getElementById("biasmedian").innerText = median(ratingNumbers).toFixed(2);
-          document.getElementById("biasmode").innerText = mode(ratingNumbers).toFixed(2);
+          document.getElementById("biasmean").innerText =
+            mean(ratingNumbers).toFixed(2);
+          document.getElementById("biasmedian").innerText =
+            median(ratingNumbers).toFixed(2);
+          document.getElementById("biasmode").innerText =
+            mode(ratingNumbers).toFixed(2);
 
           document.getElementById("statisticsLoading").classList.add("hidden");
           document.getElementById("statistics").classList.remove("hidden");
@@ -99,7 +104,7 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
           document.getElementById("commentsLoading").classList.add("hidden");
           document.getElementById("comments").classList.remove("hidden");
         }
-      }
+      },
     );
   });
 });
@@ -127,16 +132,18 @@ function refreshComments() {
   document.getElementById("comments").classList.add("hidden");
   document.getElementById("commentsNone").classList.add("hidden");
 
-  fetch(`${API_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS).then(commentsResponse => {
-    commentsResponse.json().then(comments => {
-      for (let comment of comments) {
-        createComment(comment.comment, comment.username, comment.timestamp);
-      }
+  fetch(`${API_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS).then(
+    (commentsResponse) => {
+      commentsResponse.json().then((comments) => {
+        for (let comment of comments) {
+          createComment(comment.comment, comment.username, comment.timestamp);
+        }
 
-      document.getElementById("commentsLoading").classList.add("hidden");
-      document.getElementById("comments").classList.remove("hidden");
-    });
-  })
+        document.getElementById("commentsLoading").classList.add("hidden");
+        document.getElementById("comments").classList.remove("hidden");
+      });
+    },
+  );
 }
 
 function postComment(username, comment) {
@@ -153,6 +160,7 @@ function postComment(username, comment) {
     }),
   }).then((response) => {
     if (response.ok) {
+      console.log(99);
       toast("success", "Comment submitted.");
     } else {
       toast("error", "Comment failed. Please try again later.");
@@ -162,8 +170,11 @@ function postComment(username, comment) {
 }
 
 function generateUUIDv4() {
-  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16),
   );
 }
 
@@ -192,7 +203,7 @@ function toast(type, message) {
     onHide: (context, targetEl) => {
       // remove targetEl
       targetEl.remove();
-    }
+    },
   };
 
   const dismiss = new Dismiss(toastElement, toastTrigger, options);
@@ -318,6 +329,8 @@ addEventListener("load", () => {
     .getElementById("submitRatingButton")
     .addEventListener("click", submitRating);
   document.getElementById("postCommentForm").addEventListener("submit", () => {
+    console.log(123123123);
+    alert(123);
     let username = document.getElementById("username").value;
     let comment = document.getElementById("comment").value;
     if (username === "" || comment === "") {

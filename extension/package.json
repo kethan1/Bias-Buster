@@ -18,19 +18,29 @@
   ],
   "license": "MIT",
   "scripts": {
-    "tailwind-build": "tailwindcss -i ./tailwind.css -o ./tailwind-build.css",
-    "tailwind-build-watch": "tailwindcss -i ./tailwind.css -o ./tailwind-build.css --watch",
+    "webpack-build-watch": "webpack-cli --mode=development --watch",
+    "webpack-build-prod-watch": "webpack-cli --mode=production --node-env=production --watch",
     "webpack-build-dev": "webpack-cli --mode=development",
-    "webpack-build-prod": "webpack-cli --mode=production"
+    "webpack-build-prod": "webpack-cli --mode=production --node-env=production",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss,html}\""
   },
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.9.1",
+    "mini-css-extract-plugin": "^2.7.7",
+    "postcss": "^8.4.33",
+    "postcss-loader": "^8.0.0",
+    "postcss-preset-env": "^9.3.0",
+    "prettier": "^3.2.4",
+    "style-loader": "^3.3.4",
     "tailwindcss": "^3.4.1",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
     "flowbite": "^2.2.1",
+    "html-webpack-plugin": "^5.6.0",
     "moment": "^2.30.1"
   }
 }
