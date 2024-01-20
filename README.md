@@ -1,5 +1,11 @@
 # Bias Buster
 
+## User Guide
+
+Download the latest built extension using this link: https://github.com/kethan1/Bias-Buster/releases/latest/download/Bias-Buster-Extension.zip.
+
+Unzip the file and go to `chrome://extensions`. Then, click on load unpacked and select the folder containing the Bias Buster Extension. 
+
 ## Inspiration
 
 Misinformation has grown widespread in the recent decades as a result of the rapid increase of technological communication. The majority of the population learn a considerable amount of information from online sources and social media; however, it is often difficult to distinguish whether this information is incorrect or holds bias, even from the most reputable of sources.
