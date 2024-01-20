@@ -38,7 +38,7 @@ Seo, Hyunjin, et al. "Vulnerable populations and misinformation: A mixed-methods
 
 ### Running the Flask Backend
 
-Setup up a MongoDB database instance either through MongoDB cloud or locally. Create a `.env` file and set the key `MONGO_URI` equal to the URL of the database you generated earlier. Make sure that it contains a database name (ex: <code>mongodb://localhost:27017/<b><database></b></code>).
+Setup up a MongoDB database instance either through MongoDB cloud or locally. Create a `.env` file and set the key `MONGO_URI` equal to the URL of the database you generated earlier. Make sure that it contains a database name (ex: <code>mongodb://localhost:27017/<b>\<database\></b></code>).
 
 ### Running the Extension
 
