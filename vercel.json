@@ -1,0 +1,12 @@
+{
+    "buildCommand": "pip install -r backend/requirements.txt",
+    "builds": [
+        {
+          "src": "./backend/app.py",
+          "use": "@vercel/python"
+        }
+    ],
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/backend/app.py" }
+    ]
+}

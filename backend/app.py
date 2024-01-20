@@ -16,6 +16,11 @@ mongo = PyMongo(app)
 CORS(app)
 
 
+@app.route("/")
+def index():
+    return "Bias Buster Backend"
+
+
 @app.route("/api/v1/get-comments")
 def get_comments():
     url = request.args["url"]
@@ -63,5 +68,5 @@ def add_rating():
     return {"success": True}
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and os.environ.get("AWS_LAMBDA_FUNCTION_NAME") is None:
     app.run(port=5000, debug=True)
