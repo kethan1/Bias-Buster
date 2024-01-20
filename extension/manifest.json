@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Truth Finder",
-  "description": "An extension that allows users to comment on and identify bias in arbitrary websites and webpages.",
+  "name": "Bias Buster",
+  "description": "An extension that allows users to comment on and identify bias and prejudice on arbitrary websites and webpages.",
   "version": "1.0",
   "action": {
     "default_popup": "main.html",
