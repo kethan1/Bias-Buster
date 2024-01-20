@@ -2,8 +2,6 @@ import moment from "moment";
 import { Dismiss } from "flowbite";
 
 
-const SERVER_URL = "http://localhost:5000";
-
 let GET_SEARCH_PARAMS;
 let url;
 
@@ -68,8 +66,8 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
     url: url,
   });
   Promise.all([
-    fetch(`${SERVER_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS),
-    fetch(`${SERVER_URL}/api/v1/get-ratings` + GET_SEARCH_PARAMS),
+    fetch(`${API_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS),
+    fetch(`${API_URL}/api/v1/get-ratings` + GET_SEARCH_PARAMS),
   ]).then((responses) => {
     const [commentsResponse, ratingsResponse] = responses;
     Promise.all([commentsResponse.json(), ratingsResponse.json()]).then(
@@ -129,7 +127,7 @@ function refreshComments() {
   document.getElementById("comments").classList.add("hidden");
   document.getElementById("commentsNone").classList.add("hidden");
 
-  fetch(`${SERVER_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS).then(commentsResponse => {
+  fetch(`${API_URL}/api/v1/get-comments` + GET_SEARCH_PARAMS).then(commentsResponse => {
     commentsResponse.json().then(comments => {
       for (let comment of comments) {
         createComment(comment.comment, comment.username, comment.timestamp);
@@ -142,7 +140,7 @@ function refreshComments() {
 }
 
 function postComment(username, comment) {
-  fetch(`${SERVER_URL}/api/v1/post-comment`, {
+  fetch(`${API_URL}/api/v1/post-comment`, {
     method: "POST",
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -282,7 +280,7 @@ function submitRating() {
   if (rating === -1) {
     toast("warning", "Please select a rating.");
   } else {
-    fetch(`${SERVER_URL}/api/v1/add-rating`, {
+    fetch(`${API_URL}/api/v1/add-rating`, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
