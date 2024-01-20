@@ -13,7 +13,6 @@ load_dotenv()
 app = Flask(__name__)
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 mongo = PyMongo(app)
-db = mongo.cx["dev"]
 CORS(app)
 
 
@@ -21,7 +20,7 @@ CORS(app)
 def get_comments():
     url = request.args["url"]
 
-    return json.loads(json_util.dumps(db.comments.find({
+    return json.loads(json_util.dumps(mongo.db.comments.find({
         "url": url
     })))
 
@@ -32,7 +31,7 @@ def post_comment():
     comment = request.json["comment"]
     username = request.json["username"]
 
-    db.comments.insert_one({
+    mongo.db.comments.insert_one({
         "url": url,
         "comment": comment,
         "username": username,
@@ -46,7 +45,7 @@ def post_comment():
 def get_ratings():
     url = request.args["url"]
 
-    return json.loads(json_util.dumps(db.ratings.find({
+    return json.loads(json_util.dumps(mongo.db.ratings.find({
         "url": url
     })))
 
@@ -56,7 +55,7 @@ def add_rating():
     url = request.json["url"]
     rating = int(request.json["rating"])
 
-    db.ratings.insert_one({
+    mongo.db.ratings.insert_one({
         "url": url,
         "rating": rating
     })
